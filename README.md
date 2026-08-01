@@ -36,6 +36,7 @@ Designed for music producers, audio engineers, and sound designers who need fast
   - **FLAC** (Lossless Audio)
   - **AIFF** (Apple Uncompressed PCM)
   - **CAF** (Core Audio Format)
+- 📁 **New Folder Creation** — create and name new output folders on the fly right inside the selection dialog
 - 🔘 **Interactive Conversion Button** — activates dynamically when input & output folders are set
 - 🎛️ **Dual Engine Core** — utilizes native macOS `afconvert` and automatically hooks into `ffmpeg` when available
 - 📊 **Real-time Progress Indicator** — visual progress bar and status feedback during batch processing
@@ -47,7 +48,7 @@ Designed for music producers, audio engineers, and sound designers who need fast
 ## Supported Input & Target Formats
 
 | Format | Extensions | Input | Target Output |
-| -------- | ----------- |:---:|:---:|
+| --- | --- | --- | --- |
 | WAV | `.wav` | ✅ | ✅ |
 | MP3 | `.mp3` | ✅ | ✅ |
 | AAC / M4A | `.aac`, `.m4a` | ✅ | ✅ |
@@ -69,7 +70,7 @@ Designed for music producers, audio engineers, and sound designers who need fast
 
 1. Double-click **`Format Converter.app`** (or `Audio to WAV Converter.app`).
 2. Click **Select...** to pick your **Input Folder**.
-3. Click **Select...** to pick your **Output Folder**.
+3. Click **Select...** to pick your **Output Folder** (click **New Folder** if you want to create a new destination folder).
 4. Choose your desired **Target Format** from the dropdown menu (e.g. `MP3`, `WAV`, `M4A`, `FLAC`).
 5. Click **Convert Files**.
 6. View real-time progress. Upon completion, click **Open Output Folder** to inspect your converted audio.
