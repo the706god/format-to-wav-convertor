@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="893%203%20WhBkg%20C.png" alt="893 Media Group" width="160"/>
+  <img src="893%203%20BlkBg%20C.jpg" alt="893 Media Group" width="160"/>
 </p>
 
 <h1 align="center">Format to WAV Converter</h1>
@@ -177,5 +177,5 @@ MIT License — free to use, modify, and distribute.
 
 <p align="center">
   Developed by <strong>893 Media Group</strong><br/>
-  <img src="893%203%20WhBkg%20C.png" alt="893MG" width="80"/>
+  <img src="893%203%20BlkBg%20C.jpg" alt="893MG" width="80"/>
 </p>
