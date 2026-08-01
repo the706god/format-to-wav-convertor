@@ -2,9 +2,9 @@
   <img src="893%203%20BlkBg%20C.jpg" alt="893 Media Group" width="160"/>
 </p>
 
-<h1 align="center">Format to WAV Converter</h1>
+<h1 align="center">Format to Any Converter</h1>
 <p align="center">
-  A native macOS tool for batch-converting audio files to uncompressed WAV format.<br/>
+  A native macOS application for bidirectional batch audio conversion.<br/>
   Built by <strong>893 Media Group</strong>
 </p>
 
@@ -18,154 +18,70 @@
 
 ## Overview
 
-**Format to WAV Converter** is a lightweight, dependency-free macOS utility that converts a folder of audio files into uncompressed **WAV (PCM 16-bit)** format using Apple's native `afconvert` engine — or `ffmpeg` if installed. It ships as both a double-clickable **macOS app** with native folder-picker dialogs and a **command-line tool** for terminal workflows.
+**Format to Any Converter** (v2.0) is a lightweight, 100% native macOS utility for batch audio conversion between **WAV, MP3, M4A/AAC, FLAC, AIFF, and CAF**.
 
-Designed for music producers, audio engineers, and sound designers who need to bulk-convert libraries out of compressed or proprietary formats quickly, with no setup required.
+It features a clean native macOS GUI window with an interactive target format dropdown menu, folder pickers, progress tracking, and a dynamic conversion button.
+
+Designed for music producers, audio engineers, and sound designers who need fast, flexible audio format conversion without bloated third-party software.
 
 ---
 
 ## Features
 
-- 🖥️ **Native macOS GUI** — uses built-in system dialogs (no Electron, no Python, no browser)
-- ⚡ **Fast batch conversion** — processes entire folders in one click
-- 🎛️ **Dual engine** — uses macOS `afconvert` natively; auto-detects `ffmpeg` if installed
-- 📁 **Flexible output** — choose any destination folder independently of the source
-- ✅ **Skip existing files** — won't re-convert files already present in the output folder
-- 📊 **Results summary** — shows converted / skipped / failed counts after every run
-- 🔒 **Self-contained** — the `.app` bundle includes everything it needs; move it anywhere
+- 🖥️ **Native macOS Window GUI** — built using Swift & AppKit (100% native UI, no Electron/Python/Web wrappers)
+- 🔄 **Bidirectional Multi-Format Selection** — dropdown selector lets you choose your target format:
+  - **WAV** (Uncompressed 16-bit PCM)
+  - **MP3** (Compressed Audio)
+  - **M4A** (AAC Audio)
+  - **FLAC** (Lossless Audio)
+  - **AIFF** (Apple Uncompressed PCM)
+  - **CAF** (Core Audio Format)
+- 🔘 **Interactive Conversion Button** — activates dynamically when input & output folders are set
+- 🎛️ **Dual Engine Core** — utilizes native macOS `afconvert` and automatically hooks into `ffmpeg` when available
+- 📊 **Real-time Progress Indicator** — visual progress bar and status feedback during batch processing
+- ✅ **Smart File Skip** — automatically skips existing output files to save processing time
+- 🔒 **Standalone Bundle** — completely self-contained `.app` executable
 
 ---
 
-## Supported Input Formats
+## Supported Input & Target Formats
 
-| Format | Extensions | Notes |
-|--------|-----------|-------|
-| MP3 | `.mp3` | Most common lossy format |
-| AAC | `.aac`, `.m4a`, `.mp4` | Apple/iTunes standard lossy |
-| ALAC | `.m4a` | Apple Lossless — open standard |
-| AIFF | `.aiff`, `.aif` | Apple's uncompressed PCM format |
-| FLAC | `.flac` | Free Lossless Audio Codec |
-| Core Audio Format | `.caf`, `.caff` | Logic Pro, GarageBand, system audio |
-| Protected AAC | `.m4p` | Legacy iTunes DRM — converts only if DRM-free |
-| iPhone Ringtone | `.m4r` | AAC container used for ringtones |
-| MPEG-4 Audio | `.mp4` | Video container with audio track |
+| Format | Extensions | Input | Target Output |
+| -------- | ----------- |:---:|:---:|
+| WAV | `.wav` | ✅ | ✅ |
+| MP3 | `.mp3` | ✅ | ✅ |
+| AAC / M4A | `.aac`, `.m4a` | ✅ | ✅ |
+| ALAC | `.m4a` | ✅ | ✅ |
+| AIFF | `.aiff`, `.aif` | ✅ | ✅ |
+| FLAC | `.flac` | ✅ | ✅ |
+| Core Audio Format | `.caf`, `.caff` | ✅ | ✅ |
+| Protected AAC | `.m4p` | ✅* | — |
+| iPhone Ringtone | `.m4r` | ✅ | — |
+| MPEG-4 Audio | `.mp4` | ✅ | — |
 
-> **Note on `.m4p` files:** Files purchased from the iTunes Store before 2009 may still carry DRM and will fail to convert. Files that were upgraded to DRM-free (iTunes Plus) will convert normally.
-
----
-
-## Installation
-
-No installation required. Simply clone or download the repository.
-
-```bash
-git clone https://github.com/the706god/format-to-wav-convertor.git
-```
-
-### Requirements
-
-- **macOS 10.14 Mojave or later**
-- `afconvert` — included with macOS (no install needed)
-- `ffmpeg` — optional; install via [Homebrew](https://brew.sh) for broader format support:
-  ```bash
-  brew install ffmpeg
-  ```
+> **Note on `.m4p` files:** Legacy DRM-protected files will fail unless DRM has been removed (iTunes Plus DRM-free files convert normally).
 
 ---
 
-## Usage
+## How to Use
 
-### Option 1 — macOS App (Recommended)
+### Option 1 — Native macOS App (`Format Converter.app`)
 
-1. Open the project folder in Finder
-2. Double-click **`Audio to WAV Converter.app`**
-3. Follow the two-step native folder picker:
-   - **Step 1:** Select the folder containing your audio files
-   - **Step 2:** Select the folder where WAV files should be saved
-4. Review the confirmation dialog showing the file count
-5. Click **Convert**
-6. View the results summary — optionally click **Open Output Folder** when done
-
-> **First launch only:** macOS may show a security prompt since the app isn't from the App Store. Go to **System Settings → Privacy & Security** and click **"Open Anyway"**.
+1. Double-click **`Format Converter.app`** (or `Audio to WAV Converter.app`).
+2. Click **Select...** to pick your **Input Folder**.
+3. Click **Select...** to pick your **Output Folder**.
+4. Choose your desired **Target Format** from the dropdown menu (e.g. `MP3`, `WAV`, `M4A`, `FLAC`).
+5. Click **Convert Files**.
+6. View real-time progress. Upon completion, click **Open Output Folder** to inspect your converted audio.
 
 ---
 
-### Option 2 — Command Line
-
-Make the script executable once:
+### Option 2 — CLI Tool (`mp3towav`)
 
 ```bash
 chmod +x mp3towav
+./mp3towav ~/Music/InputFolder -o ~/Music/OutputFolder
 ```
-
-**Basic usage — convert current directory:**
-```bash
-./mp3towav
-```
-
-**Convert a specific folder:**
-```bash
-./mp3towav ~/Music/MyAlbum
-```
-
-**Convert to a specific output directory:**
-```bash
-./mp3towav ~/Music/MyAlbum -o ~/Music/MyAlbum-WAV
-```
-
-**Force overwrite existing WAV files:**
-```bash
-./mp3towav ~/Music/MyAlbum -o ~/Music/MyAlbum-WAV --force
-```
-
-**Full options reference:**
-```
-Usage: mp3towav [OPTIONS] [DIRECTORY]
-
-Options:
-  -o, --output DIR    Specify output directory for WAV files
-  -f, --force         Overwrite existing WAV files
-  -h, --help          Show this help message
-```
-
----
-
-## Project Structure
-
-```
-format-to-wav-convertor/
-├── Audio to WAV Converter.app/          # Self-contained macOS app bundle
-│   └── Contents/
-│       └── Resources/
-│           └── convert_files.zsh        # Embedded conversion engine (zsh)
-├── converter.applescript                # Source code for the .app
-├── convert_files.zsh                    # Standalone conversion engine
-├── mp3towav                             # CLI batch converter script
-└── 893mg-logo.png                       # 893 Media Group logo
-```
-
----
-
-## How It Works
-
-1. **GUI layer** (`converter.applescript`) — handles folder selection and dialogs using macOS AppleScript
-2. **Conversion engine** (`convert_files.zsh`) — runs under `/bin/zsh`, uses `afconvert -f WAVE -d LEI16` (or `ffmpeg -y`) to convert each file
-3. The engine outputs results as `converted|skipped|failed|failedNames` which the GUI parses and displays
-
-The `.app` bundle has `convert_files.zsh` **embedded inside** `Contents/Resources/`, making it fully portable — no external files needed.
-
----
-
-## Output Format
-
-All files are converted to:
-
-| Property | Value |
-|---|---|
-| Container | WAV (RIFF) |
-| Codec | PCM Linear (uncompressed) |
-| Bit depth | 16-bit |
-| Sample rate | Preserved from source |
 
 ---
 
