@@ -164,6 +164,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = false
+        panel.canCreateDirectories = true
         panel.prompt = "Select Input Folder"
 
         panel.beginSheetModal(for: window) { [weak self] response in
@@ -179,6 +180,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = false
+        panel.canCreateDirectories = true
         panel.prompt = "Select Output Folder"
 
         panel.beginSheetModal(for: window) { [weak self] response in
