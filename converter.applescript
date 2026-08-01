@@ -7,7 +7,7 @@ set scriptPath to POSIX path of (path to resource "convert_files.zsh")
 -- Step 1: Pick input folder
 set inputFolder to ""
 try
-	set chosenInput to choose folder with prompt "Step 1 of 2 — Select the INPUT folder containing your audio files (MP3, M4A, AAC, FLAC, AIFF):"
+	set chosenInput to choose folder with prompt "Step 1 of 2 — Select the INPUT folder containing your audio files (MP3, M4A, AAC, FLAC, AIFF, CAF, M4P, M4R, MP4):"
 	set inputFolder to POSIX path of chosenInput
 on error
 	return
@@ -25,10 +25,10 @@ end try
 if outputFolder ends with "/" then set outputFolder to text 1 thru -2 of outputFolder
 
 -- Step 3: Count supported audio files
-set fileCount to (do shell script "find " & quoted form of inputFolder & " -maxdepth 1 -type f \\( -iname '*.mp3' -o -iname '*.m4a' -o -iname '*.aac' -o -iname '*.aiff' -o -iname '*.aif' -o -iname '*.flac' \\) | wc -l | tr -d ' '") as integer
+set fileCount to (do shell script "find " & quoted form of inputFolder & " -maxdepth 1 -type f \\( -iname '*.mp3' -o -iname '*.m4a' -o -iname '*.aac' -o -iname '*.aiff' -o -iname '*.aif' -o -iname '*.flac' -o -iname '*.caf' -o -iname '*.caff' -o -iname '*.m4p' -o -iname '*.m4r' -o -iname '*.mp4' \\) | wc -l | tr -d ' '") as integer
 
 if fileCount is 0 then
-	display alert "No Audio Files Found" message "No supported audio files (MP3, M4A, AAC, FLAC, AIFF) were found in:" & return & inputFolder as critical
+	display alert "No Audio Files Found" message "No supported audio files (MP3, M4A, AAC, FLAC, AIFF, CAF, M4P, M4R, MP4) were found in:" & return & inputFolder as critical
 	return
 end if
 

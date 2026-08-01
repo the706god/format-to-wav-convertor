@@ -95,12 +95,12 @@ while IFS= read -r -d '' file; do
         continue
     fi
     audio_files+=("$file")
-done < <(find "$INPUT_DIR" -maxdepth 1 -type f \( -iname "*.mp3" -o -iname "*.m4a" -o -iname "*.aac" -o -iname "*.aiff" -o -iname "*.flac" \) -print0)
+done < <(find "$INPUT_DIR" -maxdepth 1 -type f \( -iname "*.mp3" -o -iname "*.m4a" -o -iname "*.aac" -o -iname "*.aiff" -o -iname "*.flac" -o -iname "*.caf" -o -iname "*.caff" -o -iname "*.m4p" -o -iname "*.m4r" -o -iname "*.mp4" \) -print0)
 
 total_files=${#audio_files[@]}
 
 if [[ $total_files -eq 0 ]]; then
-    echo "⚠️  No MP3 or Audio files found in $INPUT_DIR"
+    echo "⚠️  No supported audio files found in $INPUT_DIR"
     exit 0
 fi
 

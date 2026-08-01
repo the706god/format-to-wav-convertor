@@ -43,6 +43,8 @@ while IFS= read -r -d '' f; do
 done < <(find "$INPUT" -maxdepth 1 -type f \( \
     -iname "*.mp3" -o -iname "*.m4a" -o -iname "*.aac" \
     -o -iname "*.aiff" -o -iname "*.aif" -o -iname "*.flac" \
+    -o -iname "*.caf" -o -iname "*.caff" \
+    -o -iname "*.m4p" -o -iname "*.m4r" -o -iname "*.mp4" \
 \) -print0)
 
 echo "${converted}|${skipped}|${failed}|${failed_names}"
