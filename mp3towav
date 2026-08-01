@@ -1,0 +1,154 @@
+#!/bin/zsh
+# ==============================================================================
+# mp3towav - Fast Batch MP3 / Audio to WAV Converter for macOS
+# Uses native macOS `afconvert` (or `ffmpeg` if installed)
+# ==============================================================================
+
+INPUT_DIR="."
+OUTPUT_DIR=""
+OVERWRITE=false
+USE_FFMPEG=false
+
+if command -v ffmpeg >/dev/null 2>&1; then
+    USE_FFMPEG=true
+fi
+
+usage() {
+    echo "Usage: mp3towav [OPTIONS] [DIRECTORY]"
+    echo ""
+    echo "Options:"
+    echo "  -w, --web           Launch the Web Browser UI (Recommended)"
+    echo "  -g, --gui           Launch the Desktop Window GUI"
+    echo "  -o, --output DIR    Specify output directory for WAV files"
+    echo "  -f, --force         Overwrite existing WAV files"
+    echo "  -h, --help          Show this help message"
+    echo ""
+    echo "Examples:"
+    echo "  mp3towav -w                     # Open Web UI in browser"
+    echo "  mp3towav -g                     # Launch desktop GUI app"
+    echo "  mp3towav                        # Convert all MP3s in current folder"
+    echo "  mp3towav ~/Music/Album -o ~/Wav # Convert and save to custom output dir"
+    exit 0
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -w|--web)
+            SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+            python3 "$SCRIPT_DIR/app_web.py"
+            exit 0
+            ;;
+        -g|--gui)
+            SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+            python3 "$SCRIPT_DIR/gui_app.py"
+            exit 0
+            ;;
+        -o|--output)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        -f|--force)
+            OVERWRITE=true
+            shift
+            ;;
+        -h|--help)
+            usage
+            ;;
+        *)
+            if [[ -d "$1" ]]; then
+                INPUT_DIR="$1"
+            else
+                echo "Error: Unknown argument or directory does not exist: $1"
+                exit 1
+            fi
+            shift
+            ;;
+    esac
+done
+
+INPUT_DIR=$(cd "$INPUT_DIR" && pwd)
+
+if [[ -n "$OUTPUT_DIR" ]]; then
+    mkdir -p "$OUTPUT_DIR"
+    OUTPUT_DIR=$(cd "$OUTPUT_DIR" && pwd)
+else
+    OUTPUT_DIR="$INPUT_DIR"
+fi
+
+echo "=================================================="
+echo " 🎵 Batch Audio to WAV Converter (macOS)"
+echo "=================================================="
+echo " 📁 Input Directory : $INPUT_DIR"
+echo " 📂 Output Directory: $OUTPUT_DIR"
+if $USE_FFMPEG; then
+    echo " ⚡ Engine           : ffmpeg"
+else
+    echo " ⚡ Engine           : macOS afconvert (Native)"
+fi
+echo "=================================================="
+
+audio_files=()
+while IFS= read -r -d '' file; do
+    ext="${file:t:e}"
+    ext_lower=$(echo "$ext" | tr '[:upper:]' '[:lower:]')
+    if [[ "$ext_lower" == "wav" ]]; then
+        continue
+    fi
+    audio_files+=("$file")
+done < <(find "$INPUT_DIR" -maxdepth 1 -type f \( -iname "*.mp3" -o -iname "*.m4a" -o -iname "*.aac" -o -iname "*.aiff" -o -iname "*.flac" \) -print0)
+
+total_files=${#audio_files[@]}
+
+if [[ $total_files -eq 0 ]]; then
+    echo "⚠️  No MP3 or Audio files found in $INPUT_DIR"
+    exit 0
+fi
+
+echo "Found $total_files audio file(s) to convert."
+echo ""
+
+converted_count=0
+skipped_count=0
+failed_count=0
+
+for audio in "${audio_files[@]}"; do
+    filename="${audio:t}"
+    basename_no_ext="${filename:r}"
+    wav_path="$OUTPUT_DIR/${basename_no_ext}.wav"
+
+    if [[ -f "$wav_path" && "$OVERWRITE" = false ]]; then
+        echo "⏭️  Skipping existing: $filename -> ${basename_no_ext}.wav"
+        skipped_count=$((skipped_count + 1))
+        continue
+    fi
+
+    echo -n "🔄 Converting: $filename ... "
+
+    if $USE_FFMPEG; then
+        if ffmpeg -y -loglevel error -i "$audio" "$wav_path" >/dev/null 2>&1; then
+            echo "✅ Done"
+            converted_count=$((converted_count + 1))
+        else
+            echo "❌ Failed"
+            failed_count=$((failed_count + 1))
+        fi
+    else
+        if afconvert -f WAVE -d LEI16 "$audio" "$wav_path" >/dev/null 2>&1; then
+            echo "✅ Done"
+            converted_count=$((converted_count + 1))
+        else
+            echo "❌ Failed"
+            failed_count=$((failed_count + 1))
+        fi
+    fi
+done
+
+echo ""
+echo "=================================================="
+echo " 🎉 Conversion Complete!"
+echo " ✅ Converted: $converted_count"
+echo " ⏭️  Skipped  : $skipped_count"
+if [[ $failed_count -gt 0 ]]; then
+    echo " ❌ Failed   : $failed_count"
+fi
+echo "=================================================="

@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Old/unused scripts
+app_web.py
+mp3towav-gui
+
+# App binary internals (compiled, not source)
+Audio\ to\ WAV\ Converter.app/Contents/MacOS/
+Audio\ to\ WAV\ Converter.app/Contents/Resources/Assets.car
+Audio\ to\ WAV\ Converter.app/Contents/Resources/applet.icns
+Audio\ to\ WAV\ Converter.app/Contents/Resources/applet.rsrc
+Audio\ to\ WAV\ Converter.app/Contents/_CodeSignature/
+Audio\ to\ WAV\ Converter.app/Contents/Resources/Scripts/
