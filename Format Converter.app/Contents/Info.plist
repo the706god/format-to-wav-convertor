@@ -5,7 +5,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Format Converter</string>
 	<key>CFBundleIconFile</key>
-	<string>applet</string>
+	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.893mg.format-converter</string>
 	<key>CFBundleName</key>
